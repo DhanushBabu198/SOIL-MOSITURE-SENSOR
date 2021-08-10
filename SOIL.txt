@@ -1,0 +1,33 @@
+#include <Wire.h>
+#define OUTPUT_PIN 13
+int sensor_val=A0;
+int output_val;
+void setup() 
+{
+  pinMode(sensor_val, INPUT);
+  pinMode(OUTPUT_PIN, OUTPUT);
+  digitalWrite(OUTPUT_PIN, LOW);
+  Serial.begin(9600);
+}
+void loop() 
+{
+  output_val=analogRead(sensor_val);
+    Serial.println(output_val);
+    delay(1000); 
+    if (output_val<700)
+    {
+      Serial.println("MOTOR OFF");
+      Serial.print("MOISTURE : ");
+      Serial.print(output_val);
+      Serial.print("%");
+      digitalWrite(OUTPUT_PIN,HIGH);
+  }
+  else if(output_val>900)
+  {
+      Serial.println("MOTOR ON");
+      Serial.print("MOISTURE");
+      Serial.print(output_val);
+      Serial.print("%");
+      digitalWrite(OUTPUT_PIN, LOW);
+  }
+}
